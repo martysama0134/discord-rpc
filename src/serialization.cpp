@@ -133,6 +133,15 @@ size_t JsonWriteRichPresenceObj(char* dest,
                     WriteOptionalString(writer, "small_text", presence->smallImageText);
                 }
 
+                // JOIN_URL BEGIN
+				if (presence->buttonLabel && presence->buttonLabel[0] && presence->buttonURL && presence->buttonURL[0]) {
+					WriteArray assets(writer, "buttons");
+					WriteObject btn1(writer);
+					WriteOptionalString(writer, "label", presence->buttonLabel);
+					WriteOptionalString(writer, "url", presence->buttonURL);
+				}
+                // JOIN_URL END
+
                 if ((presence->partyId && presence->partyId[0]) || presence->partySize ||
                     presence->partyMax || presence->partyPrivacy) {
                     WriteObject party(writer, "party");
